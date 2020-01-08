@@ -1,26 +1,61 @@
-let colors = generateRandomColors(6);
-
+/* eslint-disable no-loop-func */
+/* eslint-disable func-names */
+let numOfSquares = 6;
+let colors = generateRandomColors(numOfSquares);
 let squares = document.querySelectorAll(".square");
 let pickedColor = pickColor();
 let colorDisplay = document.getElementById("colorDisplay");
 let messageDisplay = document.querySelector("#message");
 let h1 = document.querySelector("h1");
 let resetButton = document.querySelector("#reset");
+let easyBtn = document.querySelector("#easyBtn");
+let hardBtn = document.querySelector("#hardBtn");
 
-resetButton.addEventListener("click", function(){
-    colors = generateRandomColors(6);
+easyBtn.addEventListener("click", function(){
+    easyBtn.classList.add("selected");
+    hardBtn.classList.remove("selected");
+    numOfSquares = 3;
+    colors = generateRandomColors(numOfSquares);
     pickedColor = pickColor();
     colorDisplay.textContent = pickedColor;
     for(let i = 0; i < squares.length; i++){
+        if(colors[i]){
+            squares[i].style.backgroundColor = colors[i];
+        } else {
+            squares[i].style.display = "none";
+        }
+    }
+});
+
+hardBtn.addEventListener("click", function(){
+    easyBtn.classList.remove("selected");
+    hardBtn.classList.add("selected");
+    numOfSquares = 6;
+    colors = generateRandomColors(numOfSquares);
+    pickedColor = pickColor();
+    colorDisplay.textContent = pickedColor;
+    for(let i = 0; i < squares.length; i++){
+        squares[i].style.backgroundColor = colors[i];
+        squares[i].style.display = "block";
+        
+    }
+});
+
+resetButton.addEventListener("click", function(){
+    colors = generateRandomColors(numOfSquares);
+    pickedColor = pickColor();
+    colorDisplay.textContent = pickedColor;
+    this.textContent = "New colors?"
+    messageDisplay.textContent = "";
+    for(let i = 0; i < squares.length; i++){
         squares[i].style.backgroundColor = colors[i]
     }
-    h1.style.backgroundColor = "#232323";
+    h1.style.backgroundColor = "rgb(85, 99, 129);";
 })
 colorDisplay.textContent = pickedColor;
 
 for(let i = 0; i < squares.length; i++){
     squares[i].style.backgroundColor = colors[i];
-    // eslint-disable-next-line func-names
     squares[i].addEventListener("click", function(){
         let clickedColor = this.style.backgroundColor;
 
